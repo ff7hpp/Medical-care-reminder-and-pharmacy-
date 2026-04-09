@@ -1,6 +1,6 @@
 # MedLinka
 
-https://github.com/krkralkair007/Medical-care-reminder-and-pharmacy-/blob/1c67474738e8ef9a37cb9856cb3ce9eefc423a52/MEDLINKA%20PIC%20INFO.jpg
+![MedLinka](https://raw.githubusercontent.com/krkralkair007/Medical-care-reminder-and-pharmacy-/main/MEDLINKA%20PIC%20INFO.jpg)
 
 ## Team Details
 
