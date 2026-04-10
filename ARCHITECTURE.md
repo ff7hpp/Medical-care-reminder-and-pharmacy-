@@ -156,6 +156,7 @@ MedLinka utilizes Python's asynchronous ecosystem (ASGI/Uvicorn) to handle high 
 - **AI Failure:** If Gemini times out, the backend catches the exception and returns a localized standard error ("AI unavailable, please consult a doctor").
 - **Database Locks:** SQLite handles concurrent reads well, but writes are sequential. FastAPI's async ORM interactions ensure the event loop is not blocked during I/O.
 
+
 ---
 
 ## 7. Development View
@@ -181,3 +182,30 @@ medlinka/
 │   ├── src/                  # Admin/Doctor interfaces
 │   └── package.json
 └── docker-compose.yml        # Layer 0: Infrastructure
+```
+
+### 7.2 Design Rules
+
+1. **Localization First:** All error messages and AI prompts must dynamically respect the `Accept-Language` header (`ar`, `tr`, `en`).
+2. **API Versioning:** All endpoints must be prefixed with `/api/v1/`.
+3. **Decoupled AI:** The `routers/ai.py` must never import Gemini directly; it must use `services/gemini_client.py`.
+
+---
+
+## 8. Physical View
+
+> **Reader:** System engineers and DevOps.
+
+### 8.1 Deployment Configuration (Dockerized)
+
+The current environment is containerized using Docker Compose for seamless local deployment and testing.
+
+| Node / Container | Software | Role |
+|------------------|----------|------|
+| `backend` | Python 3.11 + FastAPI + Uvicorn | API Server exposed on port `8000` |
+| `database` | SQLite (mounted volume) | Persistent data storage |
+| `dashboard` | Node + React (Vite) | Web UI exposed on port `3000` |
+| Mobile Device | Expo Go App | Connects to local network API |
+
+**External Dependencies:**
+- **Gemini API:** Accessed via outbound HTTPS from the `backend` container.
